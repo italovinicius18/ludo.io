@@ -1,0 +1,21 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.Board {
+    display: grid;
+    grid-template-columns: repeat(15, 55px);
+    height: 700px;
+    background-color: #2196F3;
+    padding: 10px;
+}
+
+.Cell {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #E1E1E1;
+    font-size: 15px;
+}
