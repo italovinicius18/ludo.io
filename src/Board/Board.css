@@ -5,17 +5,28 @@ html, body {
 
 .Board {
     display: grid;
-    grid-template-columns: repeat(15, 55px);
-    height: 700px;
-    background-color: #2196F3;
-    padding: 10px;
+    grid-template-columns: repeat(15, 1fr);
+    padding: 2%;
 }
 
 .Cell {
     display: flex;
-    flex: 1;
     align-items: center;
-    justify-content: center;
     border: 1px solid #E1E1E1;
     font-size: 15px;
+    justify-content: center;
+}
+
+@media screen and (orientation:portrait) {
+    .Board {
+        height: 50vh;
+        width: 50vh;
+    }
+}
+
+@media screen and (orientation:landscape) {
+    .Board {
+        height: 50vw;
+        width: 50vw;
+    }
 }
