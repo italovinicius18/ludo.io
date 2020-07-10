@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import './Board.css';
 
 const p1Area = ['0-0', '0-1', '0-2', '0-3', '0-4', '0-5', '1-0', '1-5', '2-0', '2-5', '3-0', '3-5', '4-0', '4-5', '5-0', '5-1', '5-2', '5-3', '5-4', '5-5', '6-1', '7-1', '7-2', '7-3', '7-4', '7-5', '7-6']; // prettier-ignore
@@ -11,6 +11,8 @@ const p4Area = ['9-9', '9-10', '9-11', '9-12', '9-13', '9-14', '10-9', '10-14', 
 const p4Tokens = ['10-10', '10-12', '12-10', '12-12'];
 const expandableCells = ['1-1', '1-3', '3-1', '3-3', '1-10', '1-12', '3-10', '3-12', '10-1', '10-3', '12-1', '12-3', '10-10', '10-12', '12-10', '12-12']; // prettier-ignore
 const excludedCells = ['1-2', '1-4', '2-1', '2-2', '2-3', '2-4', '3-2', '3-4', '4-1', '4-2', '4-3', '4-4', '1-11', '1-13', '2-10', '2-11', '2-12', '2-13', '3-11', '3-13', '4-10', '4-11', '4-12', '4-13', '10-2', '10-4', '11-1', '11-2', '11-3', '11-4', '12-2', '12-4', '13-1', '13-2', '13-3', '13-4', '10-11', '10-13', '11-10', '11-11', '11-12', '11-13', '12-11', '12-13', '13-10', '13-11', '13-12', '13-13']; // prettier-ignore
+
+const [playerRound, setPlayerRound] = useState(1);
 
 function paintCell(pair) {
   if (p1Area.includes(pair)) {
@@ -39,33 +41,41 @@ function placeTokens(pair) {
     backgroundColor: '',
     height: '60%',
     width: '60%',
-    borderRadius: '50%'
+    borderRadius: '50%',
+    border: '6px double white',
+    outline: 'none'
   }
 
-  var nameDiv;
-
-  var divToken = <div style={styleToken} className={'p1Token' + pair}></div>;
+  var buttonToken,nameButton;
 
   if (p1Tokens.includes(pair)) {
     styleToken.backgroundColor = 'blue';
-    nameDiv = 'p1Token-' + pair;
+    nameButton = 'p1Token-' + pair;
 
-    return divToken;
+    buttonToken =<button style={styleToken} className={nameButton}></button>;
+
+    return buttonToken;
   } else if (p2Tokens.includes(pair)) {
     styleToken.backgroundColor = 'red';
-    nameDiv = 'p2Token-' + pair;
+    nameButton = 'p2Token-' + pair;
 
-    return divToken;
+    buttonToken = <button style={styleToken} className={nameButton}></button>;
+    
+    return buttonToken;
   } else if (p3Tokens.includes(pair)) {
     styleToken.backgroundColor = 'green';
-    nameDiv = 'p3Token-' + pair;
+    nameButton = 'p3Token-' + pair;
 
-    return divToken;
+    buttonToken = <button style={styleToken} className={nameButton}></button>;
+    
+    return buttonToken;
   } else if (p4Tokens.includes(pair)) {
     styleToken.backgroundColor = 'yellow';
-    nameDiv = 'p4Token-' + pair;
+    nameButton = 'p4Token-' + pair;
 
-    return divToken;
+    buttonToken = <button style={styleToken} className={nameButton}></button>;
+    
+    return buttonToken;
   }
 }
 
@@ -96,6 +106,8 @@ function createBoard() {
 }
 
 function Board() {
+
+
   return <div className='Board'>{createBoard()}</div>;
 }
 
