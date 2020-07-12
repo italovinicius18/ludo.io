@@ -1,12 +1,6 @@
-html, body {
-    height: 100%;
-    margin: 0;
-}
-
 .Board {
     display: grid;
     grid-template-columns: repeat(15, 1fr);
-    padding: 2%;
 }
 
 .Cell {
@@ -19,14 +13,14 @@ html, body {
 
 @media screen and (orientation:portrait) {
     .Board {
-        height: 50vh;
-        width: 50vh;
+        height: 45vh;
+        width: 45vh;
     }
 }
 
 @media screen and (orientation:landscape) {
     .Board {
-        height: 50vw;
-        width: 50vw;
+        height: 45vw;
+        width: 45vw;
     }
 }
