@@ -7,20 +7,22 @@ class Game extends React.Component {
   constructor(props) {
     super(props);
     this.handleDiceChange = this.handleDiceChange.bind(this);
-    this.state = { movements: 1 };
+    this.state = { movements: 1 , rounds: 0};
   }
 
-  handleDiceChange(movements) {
+  handleDiceChange(movements, rounds) {
     this.setState({ movements });
+    this.setState({ rounds });
   }
   
   render() {
     const moves = this.state.movements
+    const round = this.state.rounds
 
     return (
     <div className="Game">
-      <Board movements={moves} onDiceChange={this.handleDiceChange} />
-      <Dice movements={moves} onDiceChange={this.handleDiceChange}/>
+      <Board movements={moves} rounds={round} onDiceChange={this.handleDiceChange} />
+      <Dice movements={moves} rounds={round} onDiceChange={this.handleDiceChange}/>
     </div>
     )
   }

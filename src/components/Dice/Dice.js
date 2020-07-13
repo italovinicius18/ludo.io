@@ -9,8 +9,19 @@ class Dice extends React.Component {
   }
 
   rollDice() {
+    var round = this.props.rounds;
+    
     var randomNumber = Math.floor(Math.random() * 6) + 1;
-    this.props.onDiceChange(randomNumber);
+    
+    // To play again need to take six on the dice or catch other player, but i need the info if other players was catched or not, so we need the positions of other tokens in props
+    if(round===4){
+      round = 1;  
+    }
+    else{
+      round++;
+    }
+
+    this.props.onDiceChange(randomNumber,round);
   }
 
   render() {
@@ -18,6 +29,7 @@ class Dice extends React.Component {
 
     return (
       <div className="Dice">
+        {this.props.rounds}
         <div style={{ display: "flex" }}>
           <img src={DieImage} className="die" alt="Die" />
         </div>

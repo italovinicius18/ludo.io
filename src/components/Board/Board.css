@@ -11,6 +11,15 @@
     justify-content: center;
 }
 
+.Token {
+    display: flex;
+    height: 60%;
+    width: 60%;
+    border-radius: 50%;
+    border: 6px double white;
+    outline: none;
+}
+
 @media screen and (orientation:portrait) {
     .Board {
         height: 45vh;
