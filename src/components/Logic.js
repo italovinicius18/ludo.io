@@ -1,43 +1,65 @@
 export function game(round, moves, boardData) {
   var board = document.querySelector(".Board");
-  if (moves === 6) {
-    setClickableTokens(board, round, moves, boardData);
-  }
+  setClickableTokens(board, round, moves, boardData);
 }
 
 function setClickableTokens(board, round, moves, boardData) {
   if (round === 1) {
-    var p1Tokens = Array.from(board.getElementsByClassName("p1"));
-    p1Tokens.forEach((token) => {
-        token.onclick = function() {moveToken(token, round, moves, boardData)}
+    var p1TokensInBoard = Array.from(board.getElementsByClassName("p1"));
+    p1TokensInBoard.forEach((token) => {
+      token.onclick = function () {
+        moveToken(board, token, round, moves, boardData.p1);
+      };
     });
   } else if (round === 2) {
-    var p2Tokens = Array.from(board.getElementsByClassName("p2"));
-    p2Tokens.forEach((token) => {
-        token.onclick = function() {moveToken(token, round, moves, boardData)}
+    var p2TokensInBoard = Array.from(board.getElementsByClassName("p2"));
+    p2TokensInBoard.forEach((token) => {
+      token.onclick = function () {
+        moveToken(board, token, round, moves, boardData.p2);
+      };
     });
   } else if (round === 3) {
-    var p3Tokens = Array.from(board.getElementsByClassName("p3"));
-    p3Tokens.forEach((token) => {
-        token.onclick = function() {moveToken(token, round, moves, boardData)}
+    var p3TokensInBoard = Array.from(board.getElementsByClassName("p3"));
+    p3TokensInBoard.forEach((token) => {
+      token.onclick = function () {
+        moveToken(board, token, round, moves, boardData.p3);
+      };
     });
   } else if (round === 4) {
-    var p4Tokens = Array.from(board.getElementsByClassName("p4"));
-    p4Tokens.forEach((token) => {
-        token.onclick = function() {moveToken(token, round, moves, boardData)}
+    var p4TokensInBoard = Array.from(board.getElementsByClassName("p4"));
+    p4TokensInBoard.forEach((token) => {
+      token.onclick = function () {
+        moveToken(board, token, round, moves, boardData.p4);
+      };
     });
   }
 }
 
-function moveToken(token, round, moves, boardData) {
-    console.log(token,boardData)
+function moveToken(board, token, round, moves, playerData) {
+  let storagedToken = token,
+    nextPosition,
+    div,
+    currentPosition,
+    id = storagedToken.parentNode.className.split(" ")[2];
 
-    // if(!boardData.+player+.path){
+  console.log(inHome(id, playerData), moves);
 
-    // }else{
+  if (inHome(id, playerData) && moves === 6) {
+    token.remove();
+    nextPosition = playerData.path[0];
+    div = board.getElementsByClassName(nextPosition)[0];
+    div.appendChild(storagedToken);
+  } 
+  else if(!inHome(id, playerData)){
+    currentPosition = playerData.path.indexOf(id);
+    nextPosition = playerData.path[currentPosition + moves];
 
-    // }
-
+    div = board.getElementsByClassName(nextPosition)[0];
+    div.appendChild(storagedToken);
+  }
 }
 
-
+function inHome(id, playerData) {
+  console.log(id);
+  return !playerData.path.includes(id);
+}

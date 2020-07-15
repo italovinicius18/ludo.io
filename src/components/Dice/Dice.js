@@ -10,12 +10,16 @@ class Dice extends React.Component {
 
   rollDice() {
     var round = this.props.rounds;
+    var moves = this.props.movements;
     
     var randomNumber = Math.floor(Math.random() * 6) + 1;
     
     // To play again need to take six on the dice or catch other player, but i need the info if other players was catched or not, so we need the positions of other tokens in props
-    if(round===4){
+    if(round===4 && moves !== 6){
       round = 1;  
+    }
+    else if (moves===6){
+      randomNumber = Math.floor(Math.random() * 6) + 1
     }
     else{
       round++;
