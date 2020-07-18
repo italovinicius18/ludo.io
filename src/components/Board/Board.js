@@ -27,6 +27,7 @@ const boardData = {
   },
   expandableCells: ['1-1', '1-3', '3-1', '3-3', '1-10', '1-12', '3-10', '3-12', '10-1', '10-3', '12-1', '12-3', '10-10', '10-12', '12-10', '12-12'], // prettier-ignore
   excludedCells: ['1-2', '1-4', '2-1', '2-2', '2-3', '2-4', '3-2', '3-4', '4-1', '4-2', '4-3', '4-4', '1-11', '1-13', '2-10', '2-11', '2-12', '2-13', '3-11', '3-13', '4-10', '4-11', '4-12', '4-13', '10-2', '10-4', '11-1', '11-2', '11-3', '11-4', '12-2', '12-4', '13-1', '13-2', '13-3', '13-4', '10-11', '10-13', '11-10', '11-11', '11-12', '11-13', '12-11', '12-13', '13-10', '13-11', '13-12', '13-13'], // prettier-ignore
+  colors: {p1:'blue',p2:'green',p3:'red',p4:'yellow'}
 }
 
 function createBoard() {
@@ -56,6 +57,16 @@ function createBoard() {
 }
 
 function paintCell(pair) {
+  // for (var prop in playerData){
+  //   if (boardData[prop].token.includes(pair)) {
+  //     styleToken.backgroundColor = playerData[prop];
+  //     nameButton = "Token "+prop+' ' + pair;
+      
+  //     buttonToken = <button style={styleToken} className={nameButton}></button>;
+      
+  //     return buttonToken;
+  //   }
+  // }
   if (boardData.p1.area.includes(pair)) {
     return 'blue';
   } else if (boardData.p2.area.includes(pair)) {
@@ -82,41 +93,59 @@ function placeTokens(pair) {
   };
   
   var buttonToken, nameButton;
-  
-  if (boardData.p1.token.includes(pair)) {
-    styleToken.backgroundColor = "blue";
-    nameButton = "Token p1 " + pair;
-    
-    buttonToken = <button style={styleToken} className={nameButton}></button>;
-    
-    return buttonToken;
-  } else if (boardData.p2.token.includes(pair)) {
-    styleToken.backgroundColor = "green";
-    nameButton = "Token p2 " + pair;
-    
-    buttonToken = <button style={styleToken} className={nameButton}></button>;
-    
-    return buttonToken;
-  } else if (boardData.p3.token.includes(pair)) {
-    styleToken.backgroundColor = "red";
-    nameButton = "Token p3 " + pair;
-    
-    buttonToken = <button style={styleToken} className={nameButton}></button>;
-    
-    return buttonToken;
-  } else if (boardData.p4.token.includes(pair)) {
-    styleToken.backgroundColor = "yellow";
-    nameButton = "Token p4 " + pair;
-    
-    buttonToken = <button style={styleToken} className={nameButton}></button>;
-    
-    return buttonToken;
+
+  for (var prop in boardData.colors){
+    if (boardData[prop].token.includes(pair)) {
+      styleToken.backgroundColor = boardData.colors[prop];
+      nameButton = "Token "+prop+' ' + pair;
+      
+      buttonToken = <button style={styleToken} className={nameButton}></button>;
+      
+      return buttonToken;
+    }
   }
+
+  // if (boardData.p1.token.includes(pair)) {
+  //   styleToken.backgroundColor = "blue";
+  //   nameButton = "Token p1 " + pair;
+    
+  //   buttonToken = <button style={styleToken} className={nameButton}></button>;
+    
+  //   return buttonToken;
+  // } else if (boardData.p2.token.includes(pair)) {
+  //   styleToken.backgroundColor = "green";
+  //   nameButton = "Token p2 " + pair;
+    
+  //   buttonToken = <button style={styleToken} className={nameButton}></button>;
+    
+  //   return buttonToken;
+  // } else if (boardData.p3.token.includes(pair)) {
+  //   styleToken.backgroundColor = "red";
+  //   nameButton = "Token p3 " + pair;
+    
+  //   buttonToken = <button style={styleToken} className={nameButton}></button>;
+    
+  //   return buttonToken;
+  // } else if (boardData.p4.token.includes(pair)) {
+  //   styleToken.backgroundColor = "yellow";
+  //   nameButton = "Token p4 " + pair;
+    
+  //   buttonToken = <button style={styleToken} className={nameButton}></button>;
+    
+  //   return buttonToken;
+  // }
 }
 
 class Board extends React.Component {
-  render() {
+  // componentDidMount(){
+  //   game(this.props.rounds,this.props.movements,boardData)
+  // }
+
+  componentDidUpdate(){
     game(this.props.rounds,this.props.movements,boardData)
+  }
+
+  render() {
     return (
       <div className='Board'>{createBoard()}</div>
     )
