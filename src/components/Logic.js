@@ -1,31 +1,31 @@
-export function game(round, moves, boardData) {
+var roundsDone = new Set();
+
+export function game(playerRound, rounds,moves, boardData) {
   var board = document.querySelectorAll('.Board')[0];
-  setClickableTokens(board, round, moves, boardData);
+  setClickableTokens(board, playerRound, rounds, moves, boardData);
 }
 
-function setClickableTokens(board, round, moves, boardData) {
-  console.log(round);
+function setClickableTokens(board, playerRound, rounds, moves, boardData) {
   var TokensInBoard = Array.from(board.getElementsByClassName("Token"));
   TokensInBoard.forEach((token) => {
     var player = token.className.split(" ")[1];
     token.onclick = function () {
-      moveToken(board, token, round, moves, boardData[player],player);
+      moveToken(board, token, playerRound, rounds, moves, boardData[player], player);
     };
   });
 }
 
-function moveToken(board, token, round, moves, playerData, player) {
-  let storagedToken = token,
+function moveToken(board, token, playerRound, rounds, moves, playerData, player) {
+  var storagedToken = token,
     nextPosition,
     div,
     currentPosition,
     id = storagedToken.parentNode.className.split(" ")[2];
 
-  console.log(inHome(id, playerData), moves);
-
-  console.log(player[1], round.toString());
-
-  if (player[1] === round.toString()) {
+  if (player[1] === playerRound.toString() && !roundsDone.has(rounds)) {
+    if (inHome(id, playerData) && moves !== 6){
+      return
+    }
     if (inHome(id, playerData) && moves === 6) {
       token.remove();
       nextPosition = playerData.path[0];
@@ -39,10 +39,14 @@ function moveToken(board, token, round, moves, playerData, player) {
       div = board.getElementsByClassName(nextPosition)[0];
       div.appendChild(storagedToken);
     }
+    roundsDone.add(rounds)
   }
+
+
+  console.log(roundsDone)
+
 }
 
 function inHome(id, playerData) {
-  console.log(id);
   return !playerData.path.includes(id);
 }

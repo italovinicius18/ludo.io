@@ -104,45 +104,11 @@ function placeTokens(pair) {
       return buttonToken;
     }
   }
-
-  // if (boardData.p1.token.includes(pair)) {
-  //   styleToken.backgroundColor = "blue";
-  //   nameButton = "Token p1 " + pair;
-    
-  //   buttonToken = <button style={styleToken} className={nameButton}></button>;
-    
-  //   return buttonToken;
-  // } else if (boardData.p2.token.includes(pair)) {
-  //   styleToken.backgroundColor = "green";
-  //   nameButton = "Token p2 " + pair;
-    
-  //   buttonToken = <button style={styleToken} className={nameButton}></button>;
-    
-  //   return buttonToken;
-  // } else if (boardData.p3.token.includes(pair)) {
-  //   styleToken.backgroundColor = "red";
-  //   nameButton = "Token p3 " + pair;
-    
-  //   buttonToken = <button style={styleToken} className={nameButton}></button>;
-    
-  //   return buttonToken;
-  // } else if (boardData.p4.token.includes(pair)) {
-  //   styleToken.backgroundColor = "yellow";
-  //   nameButton = "Token p4 " + pair;
-    
-  //   buttonToken = <button style={styleToken} className={nameButton}></button>;
-    
-  //   return buttonToken;
-  // }
 }
 
 class Board extends React.Component {
-  // componentDidMount(){
-  //   game(this.props.rounds,this.props.movements,boardData)
-  // }
-
   componentDidUpdate(){
-    game(this.props.rounds,this.props.movements,boardData)
+    game(this.props.playerRound, this.props.rounds, this.props.movements, boardData)
   }
 
   render() {
