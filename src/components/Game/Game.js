@@ -20,7 +20,6 @@ class Game extends React.Component {
     const moves = this.state.movements
     const playerRound = this.state.playerRound
     const rounds = this.state.rounds
-    console.log(playerRound,rounds)
 
     return (
     <div className="Game">
