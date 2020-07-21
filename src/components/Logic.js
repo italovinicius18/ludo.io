@@ -1,5 +1,4 @@
 import { boardData } from "./Data";
-const homeDoor = ["6-1", "1-8", "8-13", "13-6"];
 var roundsDone = new Set();
 
 export function game(playerRound, rounds, moves) {
@@ -81,10 +80,11 @@ function moveToken(
     id = storagedToken.parentNode.className.split(" ")[2];
 
   if (player[1] === playerRound.toString() && !roundsDone.has(rounds)) {
-    if (inHome(id, playerData) && moves !== 6) {
+    if (inHome(id, playerData) && moves !== 6) { // Condition verify if the player got out the home
       return;
     }
-    if (inHome(id, playerData) && moves === 6) {
+
+    if (inHome(id, playerData) && moves === 6) { // Condition to take the layer token and make it get out home
       token.remove();
       nextPosition = playerData.path[0];
       forwardDiv = board.getElementsByClassName(nextPosition)[0];
@@ -92,32 +92,66 @@ function moveToken(
     } else if (!inHome(id, playerData)) {
       //verify if the token isnt in home and if the token belongs to the owner of the round
       currentPosition = playerData.path.indexOf(id);
+
+      if (currentPosition + moves >= playerData.path.length){
+        roundsDone.add(rounds);
+        return;
+      }
+      
       nextPosition = playerData.path[currentPosition + moves];
       forwardDiv = board.getElementsByClassName(nextPosition)[0];
-      // catchPlayer(forwardDiv, storagedToken ,board);
       forwardDiv.appendChild(storagedToken);
+
+      catchPlayer(forwardDiv, storagedToken, board)
+
     }
+
+    verifyWinner(playerData, board)
+
     roundsDone.add(rounds);
   }
 }
 
 function catchPlayer(forwardDiv, storagedToken, board) {
   //Implement the expception to homeDoor and the end of the path
+  var forwardTokens = forwardDiv.children;
 
-  var forwardToken = forwardDiv.children;
-  if (forwardToken.length > 0) {
+  if (forwardTokens.length > 1) {
     var currentPlayer = storagedToken.className.split(" ")[1];
-    var forwardPlayer = forwardToken[0].className.split(" ")[1];
+
+    var forwardToken = Array.from(forwardTokens).filter((token) => {
+      return !token.className.includes(currentPlayer);
+    })[0];
+
+    if(!forwardToken){
+      return
+    }
+
+    var forwardPlayer = forwardToken.className.split(' ')[1]
 
     if (currentPlayer !== forwardPlayer) {
       var homeDivId = forwardToken.className.split(" ")[2];
-      var homeDiv = board.getElementsByClassName(homeDivId)[0];
+      if (boardData.homeDoor.includes(homeDivId)){
+        return;
+      }
+
+      var homeDiv = Array.from(board.getElementsByClassName(homeDivId)).filter((element) => {
+        return element.className.includes('div');
+      })[0];
 
       var storagedForwardToken = forwardToken;
       forwardToken.remove();
 
       homeDiv.appendChild(storagedForwardToken);
     }
+  }
+}
+
+function verifyWinner(playerData, board){
+  var lastPosition = playerData.path[playerData.path.length - 1];
+  var lastDiv = board.getElementsByClassName(lastPosition)[0];
+  if(lastDiv.children.length === 4){
+    console.log(playerData + 'WON')
   }
 }
 
