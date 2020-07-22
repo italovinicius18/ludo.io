@@ -9,17 +9,13 @@ function createBoard() {
     for (let y = 0; y < 15; y++) {
       var pair = x + '-' + y;
       
-      var expand = expandHomeCell(pair);
-      
       var cellStyle = {
         backgroundColor: paintCell(pair),
-        gridColumnStart: expand,
-        gridRowStart: expand,
       };
       
       if (!boardData.excludedCells.includes(pair)) {
         cells.push(
-          <div key={pair} style={cellStyle} className={'Cell div ' + pair}>
+          <div key={pair} style={cellStyle} className={boardData.expandableCells.includes(pair) ? 'Cell div expanded ' + pair : 'Cell div ' + pair}>
             {placeTokens(pair)}
           </div>
         );
@@ -41,13 +37,6 @@ function paintCell(pair) {
   }
   
   return 'white';
-}
-
-function expandHomeCell(pair) {
-  if (boardData.expandableCells.includes(pair)) {
-    return 'span 2';
-  }
-  return;
 }
 
 function placeTokens(pair) {

@@ -106,6 +106,8 @@ function moveToken(
 
     }
 
+    downSizeTokens(board)
+
     verifyWinner(playerData, board)
 
     roundsDone.add(rounds);
@@ -114,7 +116,15 @@ function moveToken(
 
 function catchPlayer(forwardDiv, storagedToken, board) {
   //Implement the expception to homeDoor and the end of the path
+
+  var forwardDivId = forwardDiv.className.split(' ')[2]; 
+
+  if(boardData.homeDoor.includes(forwardDivId)){
+    return;
+  }
+
   var forwardTokens = forwardDiv.children;
+
 
   if (forwardTokens.length > 1) {
     var currentPlayer = storagedToken.className.split(" ")[1];
@@ -131,9 +141,6 @@ function catchPlayer(forwardDiv, storagedToken, board) {
 
     if (currentPlayer !== forwardPlayer) {
       var homeDivId = forwardToken.className.split(" ")[2];
-      if (boardData.homeDoor.includes(homeDivId)){
-        return;
-      }
 
       var homeDiv = Array.from(board.getElementsByClassName(homeDivId)).filter((element) => {
         return element.className.includes('div');
@@ -153,6 +160,34 @@ function verifyWinner(playerData, board){
   if(lastDiv.children.length === 4){
     console.log(playerData + 'WON')
   }
+}
+
+function downSizeTokens(board){
+  var cells = board.children
+  var content,token;
+  Array.from(cells).forEach((cell) => {
+    if(cell.children.length > 1){
+      content = cell.children;
+      var contentSize = content.length;
+      var eachPosition = 24/contentSize;
+      Array.from(content).forEach((token)=>{
+        token.style.height = eachPosition+5+'px'
+        token.style.width = eachPosition+5+'px'
+      })
+    }
+    if(cell.children.length === 1){
+      content = cell.children;
+      token = content[0]
+      if(cell.className.includes('expanded')){
+        token.style.height = 40+'px'
+        token.style.width = 40+'px'
+      }else{
+        token.style.height = 24+'px'
+        token.style.width = 24+'px'
+      }
+    }
+  })
+
 }
 
 function intersection() {
