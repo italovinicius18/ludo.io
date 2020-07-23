@@ -1,5 +1,6 @@
 import { boardData } from "./Data";
 var roundsDone = new Set();
+var winners = [];
 
 export function game(playerRound, rounds, moves) {
   var board = document.querySelectorAll(".Board")[0];
@@ -22,7 +23,7 @@ export function verifyPlaces(playerRound) {
 
   tokensPositions.forEach((element) => {
     var indexId = pathPlayer.indexOf(element);
-    if (indexId !== -1) {
+    if (indexId !== -1 && indexId !== pathPlayer.length-1) {
       currentPositions.push(indexId);
     }
   });
@@ -73,11 +74,20 @@ function moveToken(
   playerData,
   player
 ) {
+
+  if(winners.includes(playerRound)){
+    return
+  }
+
   var storagedToken = token,
     nextPosition,
     forwardDiv,
     currentPosition,
     id = storagedToken.parentNode.className.split(" ")[2];
+
+  if (verifyEnd(playerRound,token)){
+    return
+  }
 
   if (player[1] === playerRound.toString() && !roundsDone.has(rounds)) {
     if (inHome(id, playerData) && moves !== 6) { // Condition verify if the player got out the home
@@ -108,14 +118,13 @@ function moveToken(
 
     downSizeTokens(board)
 
-    verifyWinner(playerData, board)
+    verifyWinner(playerData, playerRound, board)
 
     roundsDone.add(rounds);
   }
 }
 
 function catchPlayer(forwardDiv, storagedToken, board) {
-  //Implement the expception to homeDoor and the end of the path
 
   var forwardDivId = forwardDiv.className.split(' ')[2]; 
 
@@ -154,11 +163,23 @@ function catchPlayer(forwardDiv, storagedToken, board) {
   }
 }
 
-function verifyWinner(playerData, board){
+function verifyEnd(playerRound,token){
+  var currentPlayer = "p" + playerRound;
+  var pathPlayer = boardData[currentPlayer].path;
+  var endPath = pathPlayer[pathPlayer.length-1]
+  var parentToken = token.parentNode.className.split(' ')[2];
+  if(endPath===parentToken){
+    return true
+  }
+  return false
+}
+
+function verifyWinner(playerData, playerRound, board){
   var lastPosition = playerData.path[playerData.path.length - 1];
   var lastDiv = board.getElementsByClassName(lastPosition)[0];
   if(lastDiv.children.length === 4){
-    console.log(playerData + 'WON')
+    console.log(playerRound + 'WON')
+    winners.push(playerRound)
   }
 }
 
@@ -170,10 +191,17 @@ function downSizeTokens(board){
       content = cell.children;
       var contentSize = content.length;
       var eachPosition = 24/contentSize;
-      Array.from(content).forEach((token)=>{
-        token.style.height = eachPosition+5+'px'
-        token.style.width = eachPosition+5+'px'
-      })
+      if(content.length === 2){
+        Array.from(content).forEach((token)=>{
+          token.style.height = eachPosition+5+'px'
+          token.style.width = eachPosition+5+'px'
+        })
+      }else{
+        Array.from(content).forEach((token)=>{
+          token.style.height = eachPosition+8+'px'
+          token.style.width = eachPosition+8+'px'
+        })
+      }
     }
     if(cell.children.length === 1){
       content = cell.children;
