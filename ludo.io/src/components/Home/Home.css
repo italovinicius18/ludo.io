@@ -1,0 +1,71 @@
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
+.Home {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  background-color: salmon;
+  justify-content: space-evenly;
+}
+
+.Title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: xx-large;
+  color: #fff;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: #462255;
+}
+
+.Form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.Username {
+  display: flex;
+  text-align: center;
+  margin: 5%;
+  height: 50px;
+  width: 200px;
+  border-radius: 10px;
+}
+
+.Buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 20%;
+  width: 50%;
+  flex-direction: row;
+}
+
+.Button {
+  outline: none;
+  animation: button-gradient 25s ease infinite;
+  background-color: #462255;
+  background-size: 500%;
+  border: none;
+  border-radius: 3px;
+  box-shadow: 0 3px 0 0 #5664a7;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  height: 40px;
+  width: 150px;
+}
+
+.Button:hover {
+  box-shadow: 0 2px 0 0 #5664a7;
+}
+
+.Button:active {
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.25), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
