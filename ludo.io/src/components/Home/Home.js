@@ -16,8 +16,8 @@ class Home extends React.Component {
         <div className="Form">
           <input className="Username" type="text" name="username" placeholder="Digite seu username"></input>
           <div className="Buttons">
-            <button className="Button" >Criar sala</button>
-            <button className="Button" >Entrar em sala</button>
+            <button className="Button" onClick={()=>{console.log('Criar')}} >Criar sala</button>
+            <button className="Button" onClick={()=>{console.log('Entrar')}}>Entrar em sala</button>
           </div>
         </div>
       </div>

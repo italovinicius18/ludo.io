@@ -9,7 +9,7 @@ body {
   height: 100vh;
   flex-direction: column;
   background-color: salmon;
-  justify-content: space-evenly;
+  justify-content: space-around;
 }
 
 .Title {
@@ -49,6 +49,7 @@ body {
 
 .Button {
   outline: none;
+  margin: 10%;
   animation: button-gradient 25s ease infinite;
   background-color: #462255;
   background-size: 500%;
@@ -56,7 +57,7 @@ body {
   border-radius: 3px;
   box-shadow: 0 3px 0 0 #5664a7;
   color: #fff;
-  font-size: 14px;
+  font-size: 80%;
   font-weight: 600;
   height: 40px;
   width: 150px;
