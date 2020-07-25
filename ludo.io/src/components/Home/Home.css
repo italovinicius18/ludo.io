@@ -31,10 +31,9 @@ body {
   justify-content: center;
 }
 
-.Username {
+input {
   display: flex;
   text-align: center;
-  margin: 5%;
   height: 50px;
   width: 200px;
   border-radius: 10px;
